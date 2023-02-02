@@ -6,6 +6,7 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
+	"github.com/CosmWasm/wasmd/x/wasm/polywrapvm"
 	"math"
 	"path/filepath"
 	"reflect"
@@ -102,6 +103,7 @@ type Keeper struct {
 	maxQueryStackSize    uint32
 	acceptedAccountTypes map[reflect.Type]struct{}
 	accountPruner        AccountPruner
+	polywrapVm           *polywrapvm.VM
 }
 
 // NewKeeper creates a new contract Keeper instance
@@ -134,6 +136,11 @@ func NewKeeper(
 		paramSpace = paramSpace.WithKeyTable(types.ParamKeyTable())
 	}
 
+	polywrapVm, err := polywrapvm.NewVM(filepath.Join(homeDir, "polygasm"))
+	if err != nil {
+		panic(err)
+	}
+
 	keeper := &Keeper{
 		storeKey:             storeKey,
 		cdc:                  cdc,
@@ -149,6 +156,7 @@ func NewKeeper(
 		gasRegister:          NewDefaultWasmGasRegister(),
 		maxQueryStackSize:    types.DefaultMaxQueryStackSize,
 		acceptedAccountTypes: defaultAcceptedAccountTypes,
+		polywrapVm:           polywrapVm,
 	}
 	keeper.wasmVMQueryHandler = DefaultQueryPlugins(bankKeeper, stakingKeeper, distKeeper, channelKeeper, keeper)
 	for _, o := range opts {
@@ -210,11 +218,12 @@ func (k Keeper) create(ctx sdk.Context, creator sdk.AccAddress, wasmCode []byte,
 	}
 
 	ctx.GasMeter().ConsumeGas(k.gasRegister.CompileCosts(len(wasmCode)), "Compiling wasm bytecode")
-	checksum, err = k.wasmVM.Create(wasmCode)
+	//checksum, err = k.wasmVM.Create(wasmCode)
+	checksum, err = k.polywrapVm.Create(wasmCode)
 	if err != nil {
 		return 0, checksum, sdkerrors.Wrap(types.ErrCreateFailed, err.Error())
 	}
-	report, err := k.wasmVM.AnalyzeCode(checksum)
+	report, err := k.polywrapVm.AnalyzeCode(checksum)
 	if err != nil {
 		return 0, checksum, sdkerrors.Wrap(types.ErrCreateFailed, err.Error())
 	}
@@ -250,7 +259,7 @@ func (k Keeper) importCode(ctx sdk.Context, codeID uint64, codeInfo types.CodeIn
 			return sdkerrors.Wrap(types.ErrCreateFailed, err.Error())
 		}
 	}
-	newCodeHash, err := k.wasmVM.Create(wasmCode)
+	newCodeHash, err := k.polywrapVm.Create(wasmCode)
 	if err != nil {
 		return sdkerrors.Wrap(types.ErrCreateFailed, err.Error())
 	}
@@ -353,7 +362,7 @@ func (k Keeper) instantiate(
 
 	// instantiate wasm contract
 	gas := k.runtimeGasForContract(ctx)
-	res, gasUsed, err := k.wasmVM.Instantiate(codeInfo.CodeHash, env, info, initMsg, prefixStore, cosmwasmAPI, querier, k.gasMeter(ctx), gas, costJSONDeserialization)
+	res, gasUsed, err := k.polywrapVm.Instantiate(codeInfo.CodeHash, env, info, initMsg, prefixStore, cosmwasmAPI, querier, k.gasMeter(ctx), gas, costJSONDeserialization)
 	k.consumeRuntimeGas(ctx, gasUsed)
 	if err != nil {
 		return nil, nil, sdkerrors.Wrap(types.ErrInstantiateFailed, err.Error())
@@ -364,7 +373,7 @@ func (k Keeper) instantiate(
 	contractInfo := types.NewContractInfo(codeID, creator, admin, label, createdAt)
 
 	// check for IBC flag
-	report, err := k.wasmVM.AnalyzeCode(codeInfo.CodeHash)
+	report, err := k.polywrapVm.AnalyzeCode(codeInfo.CodeHash)
 	if err != nil {
 		return nil, nil, sdkerrors.Wrap(types.ErrInstantiateFailed, err.Error())
 	}
@@ -882,7 +891,7 @@ func (k Keeper) GetByteCode(ctx sdk.Context, codeID uint64) ([]byte, error) {
 		return nil, nil
 	}
 	k.cdc.MustUnmarshal(codeInfoBz, &codeInfo)
-	return k.wasmVM.GetCode(codeInfo.CodeHash)
+	return k.polywrapVm.GetCode(codeInfo.CodeHash)
 }
 
 // PinCode pins the wasm contract in wasmvm cache

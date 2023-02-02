@@ -547,6 +547,10 @@ func StoreHackatomExampleContract(t testing.TB, ctx sdk.Context, keepers TestKee
 	return StoreExampleContract(t, ctx, keepers, "./testdata/hackatom.wasm")
 }
 
+func StoreHelloWorldExampleContract(t testing.TB, ctx sdk.Context, keepers TestKeepers) ExampleContract {
+	return StoreExampleContract(t, ctx, keepers, "./testdata/hello_world.wasm")
+}
+
 func StoreBurnerExampleContract(t testing.TB, ctx sdk.Context, keepers TestKeepers) ExampleContract {
 	return StoreExampleContract(t, ctx, keepers, "./testdata/burner.wasm")
 }
@@ -677,6 +681,24 @@ func InstantiateReflectExampleContract(t testing.TB, ctx sdk.Context, keepers Te
 		Label:           label,
 		Deposit:         initialAmount,
 	}
+}
+
+type HelloWorldInitMsg struct {
+	name string
+}
+
+func (h HelloWorldInitMsg) MarshalJSON() ([]byte, error) {
+	return json.Marshal(struct {
+		Name string `json:"name"`
+	}{
+		Name: h.name,
+	})
+}
+
+func (h HelloWorldInitMsg) GetBytes(t testing.TB) []byte {
+	initMsgBz, err := json.Marshal(h)
+	require.NoError(t, err)
+	return initMsgBz
 }
 
 type HackatomExampleInitMsg struct {

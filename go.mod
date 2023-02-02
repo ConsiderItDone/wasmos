@@ -24,7 +24,6 @@ require (
 	github.com/spf13/cast v1.5.0
 	github.com/spf13/cobra v1.6.0
 	github.com/spf13/pflag v1.0.5
-	github.com/spf13/viper v1.14.0
 	github.com/stretchr/testify v1.8.1
 	github.com/syndtr/goleveldb v1.0.1-0.20210819022825-2ae1ddf74ef7
 	github.com/tendermint/tendermint v0.34.23
@@ -32,6 +31,13 @@ require (
 	google.golang.org/genproto v0.0.0-20221024183307-1bc688fe9f3e
 	google.golang.org/grpc v1.50.1
 	gopkg.in/yaml.v2 v2.4.0
+)
+
+require (
+	github.com/bytecodealliance/wasmtime-go v1.0.0 // indirect
+	github.com/consideritdone/polywrap-go v0.0.0-20220906144647-cd7bc8047f27 // indirect
+	github.com/spf13/viper v1.14.0 // indirect
+	github.com/valyala/fastjson v1.6.3 // indirect
 )
 
 require (
@@ -101,6 +107,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.5 // indirect
 	github.com/petermattis/goid v0.0.0-20180202154549-b0b1615b78e5 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/polywrap/go-client v0.0.0-20230113222050-a72a40801029
 	github.com/prometheus/client_model v0.3.0 // indirect
 	github.com/prometheus/common v0.37.0 // indirect
 	github.com/prometheus/procfs v0.8.0 // indirect
@@ -138,4 +145,5 @@ replace (
 	// the following version across all dependencies.
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 	google.golang.org/grpc => google.golang.org/grpc v1.33.2
+	github.com/polywrap/go-client => ../polywrap-go-client
 )
