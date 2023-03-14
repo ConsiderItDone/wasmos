@@ -5,11 +5,12 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"github.com/CosmWasm/wasmvm/types"
+	"github.com/polywrap/go-client/plugin"
 	"github.com/polywrap/go-client/wasm"
 	polywrapClient "github.com/polywrap/go-client/wasm/client"
 	"github.com/polywrap/go-client/wasm/uri"
+	"log"
 	"os"
 	"path/filepath"
 
@@ -20,8 +21,9 @@ import (
 const wasmDir = "wasm"
 
 type VM struct {
-	dataDir string
-	client  *polywrapClient.Client
+	dataDir      string
+	client       *polywrapClient.Client
+	cosmosPlugin *CosmosPlugin
 }
 
 type ArgsInstantiate struct {
@@ -38,13 +40,27 @@ func NewVM(dataDir string) (*VM, error) {
 		return nil, sdkerrors.Wrap(err, "unable to create wasm directory")
 	}
 
+	cosmosPlugin := NewCosmosPlugin()
+
+	pluginPackage := plugin.NewPluginPackage(nil, plugin.NewPluginModule(cosmosPlugin))
+
+	wrapUri, err := uri.New("wrap://ens/cosmos.eth")
+	if err != nil {
+		log.Fatalf("bad wrapUri: %s (%s)", "ens/demo-plugin.eth", err)
+	}
+
+	resolver := wasm.NewStaticResolver(map[string]wasm.Package{
+		wrapUri.String(): pluginPackage,
+	})
+
 	client := polywrapClient.New(&polywrapClient.ClientConfig{
-		Resolver: wasm.NewFsResolver(),
+		Resolver: wasm.NewBaseResolver(resolver, wasm.NewFsResolver()),
 	})
 
 	return &VM{
-		dataDir: dataDir,
-		client:  client,
+		dataDir:      dataDir,
+		client:       client,
+		cosmosPlugin: cosmosPlugin,
 	}, nil
 
 }
@@ -111,10 +127,16 @@ func (vm *VM) Instantiate(checksum wasmvm.Checksum, env types.Env, info types.Me
 		return nil, 0, sdkerrors.Wrap(err, "unable to unmarshal init message")
 	}
 
+	// set store pointer to current store for this specific contract
+	vm.cosmosPlugin.SetStore(store)
+
 	res, err := polywrapClient.Invoke[map[string]interface{}, InstantiateResult, []byte](vm.client, *wrapperUri, "instantiate", args, nil)
 	if err != nil {
 		return nil, gasUsed, err
 	}
+
+	// reset store pointer
+	vm.cosmosPlugin.SetStore(nil)
 
 	return &types.Response{
 		Messages:   nil,
@@ -141,34 +163,35 @@ func (vm *VM) Instantiate(checksum wasmvm.Checksum, env types.Env, info types.Me
 }
 
 func (vm *VM) Execute(checksum wasmvm.Checksum, env types.Env, info types.MessageInfo, executeMsg []byte, store wasmvm.KVStore, goapi wasmvm.GoAPI, querier wasmvm.Querier, gasMeter wasmvm.GasMeter, gasLimit uint64, deserCost types.UFraction) (*types.Response, uint64, error) {
-	envBin, err := json.Marshal(env)
-	if err != nil {
-		return nil, 0, err
-	}
-	infoBin, err := json.Marshal(info)
-	if err != nil {
-		return nil, 0, err
-	}
-	data, gasUsed, err := api.Execute(vm.cache, checksum, envBin, infoBin, executeMsg, &gasMeter, store, &goapi, &querier, gasLimit, vm.printDebug)
-	if err != nil {
-		return nil, gasUsed, err
-	}
-
-	gasForDeserialization := deserCost.Mul(uint64(len(data))).Floor()
-	if gasLimit < gasForDeserialization+gasUsed {
-		return nil, gasUsed, fmt.Errorf("Insufficient gas left to deserialize contract execution result (%d bytes)", len(data))
-	}
-
-	gasUsed += gasForDeserialization
-	var result types.ContractResult
-	err = json.Unmarshal(data, &result)
-	if err != nil {
-		return nil, gasUsed, err
-	}
-	if result.Err != "" {
-		return nil, gasUsed, fmt.Errorf("%s", result.Err)
-	}
-	return result.Ok, gasUsed, nil
+	return nil, 0, nil
+	//envBin, err := json.Marshal(env)
+	//if err != nil {
+	//	return nil, 0, err
+	//}
+	//infoBin, err := json.Marshal(info)
+	//if err != nil {
+	//	return nil, 0, err
+	//}
+	//data, gasUsed, err := api.Execute(vm.cache, checksum, envBin, infoBin, executeMsg, &gasMeter, store, &goapi, &querier, gasLimit, vm.printDebug)
+	//if err != nil {
+	//	return nil, gasUsed, err
+	//}
+	//
+	//gasForDeserialization := deserCost.Mul(uint64(len(data))).Floor()
+	//if gasLimit < gasForDeserialization+gasUsed {
+	//	return nil, gasUsed, fmt.Errorf("Insufficient gas left to deserialize contract execution result (%d bytes)", len(data))
+	//}
+	//
+	//gasUsed += gasForDeserialization
+	//var result types.ContractResult
+	//err = json.Unmarshal(data, &result)
+	//if err != nil {
+	//	return nil, gasUsed, err
+	//}
+	//if result.Err != "" {
+	//	return nil, gasUsed, fmt.Errorf("%s", result.Err)
+	//}
+	//return result.Ok, gasUsed, nil
 }
 
 func (vm *VM) getWasmFilePath(checksum wasmvm.Checksum) string {

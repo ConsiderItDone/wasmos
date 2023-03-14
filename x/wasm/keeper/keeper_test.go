@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/cosmos/cosmos-sdk/store/prefix"
 	"os"
 	"testing"
 	"time"
@@ -395,8 +396,9 @@ func TestInstantiate(t *testing.T) {
 	keepers.Faucet.Fund(ctx, creator, deposit...)
 	example := StoreHelloWorldExampleContract(t, ctx, keepers)
 
+	initValue := "Ramil"
 	initMsgBz := HelloWorldInitMsg{
-		name: "Ramil",
+		name: initValue,
 	}.GetBytes(t)
 
 	gasBefore := ctx.GasMeter().GasConsumed()
@@ -407,7 +409,8 @@ func TestInstantiate(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, "cosmos14hj2tavq8fpesdwxxcu44rty3hh90vhujrvcmstl4zr3txmfvw9s4hmalr", gotContractAddr.String())
 
-	require.Equal(t, "Hello Ramil. Polygasm Initialized!", string(resp))
+	require.Equal(t, fmt.Sprintf("Hello %s. Polygasm Initialized!", initValue), string(resp))
+	t.Logf("Initialize response: %s", string(resp))
 
 	gasAfter := ctx.GasMeter().GasConsumed()
 	if types.EnableGasVerification {
@@ -420,6 +423,13 @@ func TestInstantiate(t *testing.T) {
 	assert.Equal(t, creator.String(), info.Creator)
 	assert.Equal(t, example.CodeID, info.CodeID)
 	assert.Equal(t, "demo contract 1", info.Label)
+
+	// verify storage works properly
+	prefixStoreKey := types.GetContractStorePrefix(gotContractAddr)
+	prefixStore := prefix.NewStore(ctx.KVStore(keepers.WasmKeeper.storeKey), prefixStoreKey)
+	configValue := string(prefixStore.Get([]byte("config")))
+	assert.Equal(t, initValue, configValue)
+	t.Logf("Config value from Smart Contract: %s", configValue)
 
 	exp := []types.ContractCodeHistoryEntry{{
 		Operation: types.ContractCodeHistoryOperationTypeInit,
