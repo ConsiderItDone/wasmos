@@ -18,8 +18,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/CosmWasm/wasmd/x/wasm/keeper/testdata"
-	"github.com/CosmWasm/wasmd/x/wasm/types"
+	"github.com/ConsiderItDone/polygasm/x/wasm/keeper/testdata"
+	"github.com/ConsiderItDone/polygasm/x/wasm/types"
 )
 
 // ReflectInitMsg is {}

@@ -17,9 +17,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/CosmWasm/wasmd/app"
-	wasmibctesting "github.com/CosmWasm/wasmd/x/wasm/ibctesting"
-	wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
+	"github.com/ConsiderItDone/polygasm/app"
+	wasmibctesting "github.com/ConsiderItDone/polygasm/x/wasm/ibctesting"
+	wasmtypes "github.com/ConsiderItDone/polygasm/x/wasm/types"
 )
 
 func TestIBCFeesTransfer(t *testing.T) {

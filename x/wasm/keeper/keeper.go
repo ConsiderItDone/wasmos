@@ -6,7 +6,7 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
-	"github.com/CosmWasm/wasmd/x/wasm/polywrapvm"
+	"github.com/ConsiderItDone/polygasm/x/wasm/polywrapvm"
 	"math"
 	"path/filepath"
 	"reflect"
@@ -26,8 +26,8 @@ import (
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/tendermint/tendermint/libs/log"
 
-	"github.com/CosmWasm/wasmd/x/wasm/ioutils"
-	"github.com/CosmWasm/wasmd/x/wasm/types"
+	"github.com/ConsiderItDone/polygasm/x/wasm/ioutils"
+	"github.com/ConsiderItDone/polygasm/x/wasm/types"
 )
 
 // contractMemoryLimit is the memory limit of each contract execution (in MiB)

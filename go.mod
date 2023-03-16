@@ -1,4 +1,4 @@
-module github.com/CosmWasm/wasmd
+module github.com/ConsiderItDone/polygasm
 
 go 1.19
 
