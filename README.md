@@ -18,7 +18,7 @@
 - Provides access to IBC, Cosmos Staking and Cosmos key-value storage (get and set data on-chain)
 
 
-![](https://i.imgur.com/SA4t7TZ.png)
+![](https://i.imgur.com/bs6mmjS.png)
 
 ## Development
 
