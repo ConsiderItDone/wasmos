@@ -388,7 +388,7 @@ func TestBurnCoinMessageHandlerIntegration(t *testing.T) {
 			}}
 
 			// when
-			_, err = k.execute(ctx, example.Contract, example.CreatorAddr, nil, nil)
+			_, err = k.execute(ctx, example.Contract, example.CreatorAddr, nil, "", nil)
 
 			// then
 			if spec.expErr {

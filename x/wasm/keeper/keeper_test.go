@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
+	"github.com/cosmos/cosmos-sdk/types/address"
 	"os"
 	"testing"
 	"time"
@@ -17,7 +18,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	stypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/types/address"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	"github.com/cosmos/cosmos-sdk/x/auth/vesting"
@@ -844,7 +844,7 @@ func TestExecute(t *testing.T) {
 
 	// unauthorized - trialCtx so we don't change state
 	trialCtx := ctx.WithMultiStore(ctx.MultiStore().CacheWrap().(sdk.MultiStore))
-	res, err := keepers.ContractKeeper.Execute(trialCtx, addr, creator, []byte(`{"release":{}}`), nil)
+	res, err := keepers.ContractKeeper.Execute(trialCtx, addr, creator, []byte(`{"release":{}}`), "", nil)
 	require.Error(t, err)
 	require.True(t, errors.Is(err, types.ErrExecuteFailed))
 	require.Equal(t, "Unauthorized: execute wasm contract failed", err.Error())
@@ -854,7 +854,7 @@ func TestExecute(t *testing.T) {
 	gasBefore := ctx.GasMeter().GasConsumed()
 	em := sdk.NewEventManager()
 	// when
-	res, err = keepers.ContractKeeper.Execute(ctx.WithEventManager(em), addr, fred, []byte(`{"release":{}}`), topUp)
+	res, err = keepers.ContractKeeper.Execute(ctx.WithEventManager(em), addr, fred, []byte(`{"release":{}}`), "", topUp)
 	diff := time.Now().Sub(start)
 	require.NoError(t, err)
 	require.NotNil(t, res)
@@ -960,7 +960,7 @@ func TestExecuteWithDeposit(t *testing.T) {
 			require.NoError(t, err)
 
 			// when
-			_, err = keepers.ContractKeeper.Execute(ctx, contractAddr, spec.srcActor, []byte(`{"release":{}}`), deposit)
+			_, err = keepers.ContractKeeper.Execute(ctx, contractAddr, spec.srcActor, []byte(`{"release":{}}`), "", deposit)
 
 			// then
 			if spec.expError {
@@ -984,7 +984,7 @@ func TestExecuteWithNonExistingAddress(t *testing.T) {
 
 	// unauthorized - trialCtx so we don't change state
 	nonExistingAddress := RandomAccountAddress(t)
-	_, err := keeper.Execute(ctx, nonExistingAddress, creator, []byte(`{}`), nil)
+	_, err := keeper.Execute(ctx, nonExistingAddress, creator, []byte(`{}`), "", nil)
 	require.True(t, types.ErrNotFound.Is(err), err)
 }
 
@@ -1013,7 +1013,7 @@ func TestExecuteWithPanic(t *testing.T) {
 	require.NoError(t, err)
 
 	// let's make sure we get a reasonable error, no panic/crash
-	_, err = keepers.ContractKeeper.Execute(ctx, addr, fred, []byte(`{"panic":{}}`), topUp)
+	_, err = keepers.ContractKeeper.Execute(ctx, addr, fred, []byte(`{"panic":{}}`), "", topUp)
 	require.Error(t, err)
 	require.True(t, errors.Is(err, types.ErrExecuteFailed))
 	// test with contains as "Display" implementation of the Wasmer "RuntimeError" is different for Mac and Linux
@@ -1058,7 +1058,7 @@ func TestExecuteWithCpuLoop(t *testing.T) {
 	}()
 
 	// this should throw out of gas exception (panic)
-	_, err = keepers.ContractKeeper.Execute(ctx, addr, fred, []byte(`{"cpu_loop":{}}`), nil)
+	_, err = keepers.ContractKeeper.Execute(ctx, addr, fred, []byte(`{"cpu_loop":{}}`), "", nil)
 	require.True(t, false, "We must panic before this line")
 }
 
@@ -1100,7 +1100,7 @@ func TestExecuteWithStorageLoop(t *testing.T) {
 	}()
 
 	// this should throw out of gas exception (panic)
-	_, err = keepers.ContractKeeper.Execute(ctx, addr, fred, []byte(`{"storage_loop":{}}`), nil)
+	_, err = keepers.ContractKeeper.Execute(ctx, addr, fred, []byte(`{"storage_loop":{}}`), "", nil)
 	require.True(t, false, "We must panic before this line")
 }
 
@@ -1857,7 +1857,7 @@ func TestPinnedContractLoops(t *testing.T) {
 	}
 	ctx = ctx.WithGasMeter(sdk.NewGasMeter(20000))
 	require.PanicsWithValue(t, sdk.ErrorOutOfGas{Descriptor: "ReadFlat"}, func() {
-		_, err := k.execute(ctx, example.Contract, RandomAccountAddress(t), anyMsg, nil)
+		_, err := k.execute(ctx, example.Contract, RandomAccountAddress(t), anyMsg, "", nil)
 		require.NoError(t, err)
 	})
 	assert.True(t, ctx.GasMeter().IsOutOfGas())

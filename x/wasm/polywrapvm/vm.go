@@ -29,7 +29,10 @@ type VM struct {
 type ArgsInstantiate struct {
 	name string
 }
-type InstantiateResult struct {
+type InitResult struct {
+	Result string
+}
+type ExecResult struct {
 	Result string
 }
 
@@ -44,7 +47,7 @@ func NewVM(dataDir string) (*VM, error) {
 
 	pluginPackage := plugin.NewPluginPackage(nil, plugin.NewPluginModule(cosmosPlugin))
 
-	wrapUri, err := uri.New("wrap://ens/cosmos.eth")
+	wrapUri, err := uri.New("wrap://cosmos/cosmos.eth")
 	if err != nil {
 		log.Fatalf("bad wrapUri: %s (%s)", "ens/demo-plugin.eth", err)
 	}
@@ -109,16 +112,13 @@ func (vm *VM) GetCode(checksum wasmvm.Checksum) (wasmvm.WasmCode, error) {
 	return wrapper, nil
 }
 
-func (vm *VM) Instantiate(checksum wasmvm.Checksum, env types.Env, info types.MessageInfo, initMsg []byte, store wasmvm.KVStore, goapi wasmvm.GoAPI, querier wasmvm.Querier, gasMeter wasmvm.GasMeter, gasLimit uint64, deserCost types.UFraction) (*types.Response, uint64, error) {
+func (vm *VM) Init(checksum wasmvm.Checksum, env types.Env, info types.MessageInfo, initMsg []byte, store wasmvm.KVStore, goapi wasmvm.GoAPI, querier wasmvm.Querier, gasMeter wasmvm.GasMeter, gasLimit uint64, deserCost types.UFraction) (*types.Response, uint64, error) {
 	wrapperPath := "wrap://fs/" + vm.getWasmFileDir(checksum)
 	wrapperUri, err := uri.New(wrapperPath)
 	if err != nil {
 		return nil, 0, err
 	}
 
-	//args := ArgsInstantiate{
-	//	name: "zzz",
-	//}
 	gasUsed := uint64(100) //10847  99149
 
 	var args map[string]interface{}
@@ -130,7 +130,7 @@ func (vm *VM) Instantiate(checksum wasmvm.Checksum, env types.Env, info types.Me
 	// set store pointer to current store for this specific contract
 	vm.cosmosPlugin.SetStore(store)
 
-	res, err := polywrapClient.Invoke[map[string]interface{}, InstantiateResult, []byte](vm.client, *wrapperUri, "instantiate", args, nil)
+	res, err := polywrapClient.Invoke[map[string]interface{}, InitResult, []byte](vm.client, *wrapperUri, "init", args, nil)
 	if err != nil {
 		return nil, gasUsed, err
 	}
@@ -144,54 +144,42 @@ func (vm *VM) Instantiate(checksum wasmvm.Checksum, env types.Env, info types.Me
 		Attributes: nil,
 		Events:     nil,
 	}, gasUsed, nil
-
-	//gasForDeserialization := deserCost.Mul(uint64(len(data))).Floor()
-	//if gasLimit < gasForDeserialization+gasUsed {
-	//	return nil, gasUsed, fmt.Errorf("Insufficient gas left to deserialize contract execution result (%d bytes)", len(data))
-	//}
-	//gasUsed += gasForDeserialization
-
-	//var result types.ContractResult
-	//err = json.Unmarshal(data, &result)
-	//if err != nil {
-	//	return nil, gasUsed, err
-	//}
-	//if result.Err != "" {
-	//	return nil, gasUsed, fmt.Errorf("%s", result.Err)
-	//}
-	//return result.Ok, gasUsed, nil
 }
 
-func (vm *VM) Execute(checksum wasmvm.Checksum, env types.Env, info types.MessageInfo, executeMsg []byte, store wasmvm.KVStore, goapi wasmvm.GoAPI, querier wasmvm.Querier, gasMeter wasmvm.GasMeter, gasLimit uint64, deserCost types.UFraction) (*types.Response, uint64, error) {
-	return nil, 0, nil
-	//envBin, err := json.Marshal(env)
-	//if err != nil {
-	//	return nil, 0, err
-	//}
-	//infoBin, err := json.Marshal(info)
-	//if err != nil {
-	//	return nil, 0, err
-	//}
-	//data, gasUsed, err := api.Execute(vm.cache, checksum, envBin, infoBin, executeMsg, &gasMeter, store, &goapi, &querier, gasLimit, vm.printDebug)
-	//if err != nil {
-	//	return nil, gasUsed, err
-	//}
-	//
-	//gasForDeserialization := deserCost.Mul(uint64(len(data))).Floor()
-	//if gasLimit < gasForDeserialization+gasUsed {
-	//	return nil, gasUsed, fmt.Errorf("Insufficient gas left to deserialize contract execution result (%d bytes)", len(data))
-	//}
-	//
-	//gasUsed += gasForDeserialization
-	//var result types.ContractResult
-	//err = json.Unmarshal(data, &result)
-	//if err != nil {
-	//	return nil, gasUsed, err
-	//}
-	//if result.Err != "" {
-	//	return nil, gasUsed, fmt.Errorf("%s", result.Err)
-	//}
-	//return result.Ok, gasUsed, nil
+func (vm *VM) Execute(checksum wasmvm.Checksum, env types.Env, info types.MessageInfo, executeMsg []byte, method string, store wasmvm.KVStore, goapi wasmvm.GoAPI, querier wasmvm.Querier, gasMeter wasmvm.GasMeter, gasLimit uint64, deserCost types.UFraction) (*types.Response, uint64, error) {
+	wrapperPath := "wrap://fs/" + vm.getWasmFileDir(checksum)
+	wrapperUri, err := uri.New(wrapperPath)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	gasUsed := uint64(100) //10847  99149
+
+	var args map[string]interface{}
+	if executeMsg != nil {
+		err = json.Unmarshal(executeMsg, &args)
+		if err != nil {
+			return nil, 0, sdkerrors.Wrap(err, "unable to unmarshal execute message")
+		}
+	}
+
+	// set store pointer to current store for this specific contract
+	vm.cosmosPlugin.SetStore(store)
+
+	res, err := polywrapClient.Invoke[map[string]interface{}, string, []byte](vm.client, *wrapperUri, method, args, nil)
+	if err != nil {
+		return nil, gasUsed, err
+	}
+
+	// reset store pointer
+	vm.cosmosPlugin.SetStore(nil)
+
+	return &types.Response{
+		Messages:   nil,
+		Data:       []byte(*res),
+		Attributes: nil,
+		Events:     nil,
+	}, gasUsed, nil
 }
 
 func (vm *VM) getWasmFilePath(checksum wasmvm.Checksum) string {

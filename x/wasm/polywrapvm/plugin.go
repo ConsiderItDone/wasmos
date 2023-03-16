@@ -10,18 +10,31 @@ type CosmosPlugin struct {
 	store wasmvm.KVStore
 }
 
-type DbWriteArgType struct {
+type DbSetArgType struct {
 	Key   []byte
 	Value []byte
+}
+type DbGetArgType struct {
+	Key []byte
 }
 
 func NewCosmosPlugin() *CosmosPlugin {
 	return &CosmosPlugin{}
 }
 
-func (cp *CosmosPlugin) DbWrite(args DbWriteArgType) int32 {
+func (cp *CosmosPlugin) DbSet(args DbSetArgType) bool {
 	cp.store.Set(args.Key, args.Value)
-	return 1
+	return true
+}
+func (cp *CosmosPlugin) DbGet(args DbGetArgType) []byte {
+	return cp.store.Get(args.Key)
+}
+func (cp *CosmosPlugin) DbHas(args DbGetArgType) bool {
+	return len(cp.store.Get(args.Key)) > 0
+}
+func (cp *CosmosPlugin) DbRemove(args DbGetArgType) bool {
+	cp.store.Delete(args.Key)
+	return true
 }
 
 func (cp *CosmosPlugin) SetStore(store wasmvm.KVStore) {
@@ -30,8 +43,10 @@ func (cp *CosmosPlugin) SetStore(store wasmvm.KVStore) {
 
 func (cp *CosmosPlugin) EncodeArgs(method string, args []byte) (any, error) {
 	switch method {
-	case "DbWrite":
-		return msgpack.Decode[DbWriteArgType](args)
+	case "DbSet":
+		return msgpack.Decode[DbSetArgType](args)
+	case "DbGet", "DbHas", "DbRemove":
+		return msgpack.Decode[DbGetArgType](args)
 	default:
 		return nil, fmt.Errorf("unknown method: %s", method)
 	}

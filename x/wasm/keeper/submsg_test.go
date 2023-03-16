@@ -68,7 +68,7 @@ func TestDispatchSubMsgSuccessCase(t *testing.T) {
 	}
 	reflectSendBz, err := json.Marshal(reflectSend)
 	require.NoError(t, err)
-	_, err = keepers.ContractKeeper.Execute(ctx, contractAddr, creator, reflectSendBz, nil)
+	_, err = keepers.ContractKeeper.Execute(ctx, contractAddr, creator, reflectSendBz, "", nil)
 	require.NoError(t, err)
 
 	// fred got coins
@@ -312,7 +312,7 @@ func TestDispatchSubMsgErrorHandling(t *testing.T) {
 					}
 				}
 			}()
-			_, err = keepers.ContractKeeper.Execute(execCtx, contractAddr, creator, reflectSendBz, nil)
+			_, err = keepers.ContractKeeper.Execute(execCtx, contractAddr, creator, reflectSendBz, "", nil)
 
 			if tc.executeError {
 				require.Error(t, err)
@@ -401,7 +401,7 @@ func TestDispatchSubMsgEncodeToNoSdkMsg(t *testing.T) {
 	}
 	reflectSendBz, err := json.Marshal(reflectSend)
 	require.NoError(t, err)
-	_, err = keepers.ContractKeeper.Execute(ctx, contractAddr, creator, reflectSendBz, nil)
+	_, err = keepers.ContractKeeper.Execute(ctx, contractAddr, creator, reflectSendBz, "", nil)
 	require.NoError(t, err)
 
 	// query the reflect state to ensure the result was stored
@@ -521,7 +521,7 @@ func TestDispatchSubMsgConditionalReplyOn(t *testing.T) {
 			}
 			reflectSendBz, err := json.Marshal(reflectSend)
 			require.NoError(t, err)
-			_, err = keepers.ContractKeeper.Execute(ctx, contractAddr, creator, reflectSendBz, nil)
+			_, err = keepers.ContractKeeper.Execute(ctx, contractAddr, creator, reflectSendBz, "", nil)
 
 			if tc.expectError {
 				require.Error(t, err)

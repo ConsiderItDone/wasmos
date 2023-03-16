@@ -251,7 +251,7 @@ func TestBonding(t *testing.T) {
 	}
 	bondBz, err := json.Marshal(bond)
 	require.NoError(t, err)
-	_, err = initInfo.contractKeeper.Execute(ctx, contractAddr, bob, bondBz, funds)
+	_, err = initInfo.contractKeeper.Execute(ctx, contractAddr, bob, bondBz, "", funds)
 	require.NoError(t, err)
 
 	// check some account values - the money is on neither account (cuz it is bonded)
@@ -294,7 +294,7 @@ func TestUnbonding(t *testing.T) {
 	}
 	bondBz, err := json.Marshal(bond)
 	require.NoError(t, err)
-	_, err = initInfo.contractKeeper.Execute(ctx, contractAddr, bob, bondBz, funds)
+	_, err = initInfo.contractKeeper.Execute(ctx, contractAddr, bob, bondBz, "", funds)
 	require.NoError(t, err)
 
 	// update height a bit
@@ -308,7 +308,7 @@ func TestUnbonding(t *testing.T) {
 	}
 	unbondBz, err := json.Marshal(unbond)
 	require.NoError(t, err)
-	_, err = initInfo.contractKeeper.Execute(ctx, contractAddr, bob, unbondBz, nil)
+	_, err = initInfo.contractKeeper.Execute(ctx, contractAddr, bob, unbondBz, "", nil)
 	require.NoError(t, err)
 
 	// check some account values - the money is on neither account (cuz it is bonded)
@@ -363,7 +363,7 @@ func TestReinvest(t *testing.T) {
 	}
 	bondBz, err := json.Marshal(bond)
 	require.NoError(t, err)
-	_, err = initInfo.contractKeeper.Execute(ctx, contractAddr, bob, bondBz, funds)
+	_, err = initInfo.contractKeeper.Execute(ctx, contractAddr, bob, bondBz, "", funds)
 	require.NoError(t, err)
 
 	// update height a bit to solidify the delegation
@@ -377,7 +377,7 @@ func TestReinvest(t *testing.T) {
 	}
 	reinvestBz, err := json.Marshal(reinvest)
 	require.NoError(t, err)
-	_, err = initInfo.contractKeeper.Execute(ctx, contractAddr, bob, reinvestBz, nil)
+	_, err = initInfo.contractKeeper.Execute(ctx, contractAddr, bob, reinvestBz, "", nil)
 	require.NoError(t, err)
 
 	// check some account values - the money is on neither account (cuz it is bonded)
@@ -431,7 +431,7 @@ func TestQueryStakingInfo(t *testing.T) {
 	}
 	bondBz, err := json.Marshal(bond)
 	require.NoError(t, err)
-	_, err = initInfo.contractKeeper.Execute(ctx, contractAddr, bob, bondBz, funds)
+	_, err = initInfo.contractKeeper.Execute(ctx, contractAddr, bob, bondBz, "", funds)
 	require.NoError(t, err)
 
 	// update height a bit to solidify the delegation
@@ -608,7 +608,7 @@ func TestQueryStakingPlugin(t *testing.T) {
 	}
 	bondBz, err := json.Marshal(bond)
 	require.NoError(t, err)
-	_, err = initInfo.contractKeeper.Execute(ctx, contractAddr, bob, bondBz, funds)
+	_, err = initInfo.contractKeeper.Execute(ctx, contractAddr, bob, bondBz, "", funds)
 	require.NoError(t, err)
 
 	// update height a bit to solidify the delegation

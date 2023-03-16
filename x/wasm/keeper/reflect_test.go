@@ -106,7 +106,7 @@ func TestReflectContractSend(t *testing.T) {
 	}
 	reflectSendBz, err := json.Marshal(reflectSend)
 	require.NoError(t, err)
-	_, err = keeper.Execute(ctx, reflectAddr, creator, reflectSendBz, nil)
+	_, err = keeper.Execute(ctx, reflectAddr, creator, reflectSendBz, "", nil)
 	require.NoError(t, err)
 
 	// did this work???
@@ -145,7 +145,7 @@ func TestReflectCustomMsg(t *testing.T) {
 	}
 	transferBz, err := json.Marshal(transfer)
 	require.NoError(t, err)
-	_, err = keeper.Execute(ctx, contractAddr, creator, transferBz, nil)
+	_, err = keeper.Execute(ctx, contractAddr, creator, transferBz, "", nil)
 	require.NoError(t, err)
 
 	// check some account values
@@ -172,7 +172,7 @@ func TestReflectCustomMsg(t *testing.T) {
 	}
 	reflectSendBz, err := json.Marshal(reflectSend)
 	require.NoError(t, err)
-	_, err = keeper.Execute(ctx, contractAddr, bob, reflectSendBz, nil)
+	_, err = keeper.Execute(ctx, contractAddr, bob, reflectSendBz, "", nil)
 	require.NoError(t, err)
 
 	// fred got coins
@@ -197,7 +197,7 @@ func TestReflectCustomMsg(t *testing.T) {
 	reflectOpaqueBz, err := json.Marshal(reflectOpaque)
 	require.NoError(t, err)
 
-	_, err = keeper.Execute(ctx, contractAddr, bob, reflectOpaqueBz, nil)
+	_, err = keeper.Execute(ctx, contractAddr, bob, reflectOpaqueBz, "", nil)
 	require.NoError(t, err)
 
 	// fred got more coins

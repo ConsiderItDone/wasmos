@@ -244,7 +244,7 @@ func handleExecuteProposal(ctx sdk.Context, k types.ContractOpsKeeper, p types.E
 	if err != nil {
 		return sdkerrors.Wrap(err, "run as address")
 	}
-	data, err := k.Execute(ctx, contractAddr, runAsAddr, p.Msg, p.Funds)
+	data, err := k.Execute(ctx, contractAddr, runAsAddr, p.Msg, "", p.Funds)
 	if err != nil {
 		return err
 	}

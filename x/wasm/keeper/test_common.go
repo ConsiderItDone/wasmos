@@ -510,7 +510,7 @@ func handleExecute(ctx sdk.Context, k types.ContractOpsKeeper, msg *types.MsgExe
 	if err != nil {
 		return nil, sdkerrors.Wrap(err, "admin")
 	}
-	data, err := k.Execute(ctx, contractAddr, senderAddr, msg.Msg, msg.Funds)
+	data, err := k.Execute(ctx, contractAddr, senderAddr, msg.Msg, "", msg.Funds)
 	if err != nil {
 		return nil, err
 	}
@@ -699,6 +699,24 @@ func (h HelloWorldInitMsg) GetBytes(t testing.TB) []byte {
 	initMsgBz, err := json.Marshal(h)
 	require.NoError(t, err)
 	return initMsgBz
+}
+
+type HelloWorldUpdateNameMsg struct {
+	newName string
+}
+
+func (h HelloWorldUpdateNameMsg) MarshalJSON() ([]byte, error) {
+	return json.Marshal(struct {
+		NewName string `json:"newName"`
+	}{
+		NewName: h.newName,
+	})
+}
+
+func (h HelloWorldUpdateNameMsg) GetBytes(t testing.TB) []byte {
+	msgBz, err := json.Marshal(h)
+	require.NoError(t, err)
+	return msgBz
 }
 
 type HackatomExampleInitMsg struct {
