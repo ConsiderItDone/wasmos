@@ -18,8 +18,8 @@ import (
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ConsiderItDone/polygasm/x/wasm/keeper/wasmtesting"
-	"github.com/ConsiderItDone/polygasm/x/wasm/types"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper/wasmtesting"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
 )
 
 func TestEncoding(t *testing.T) {

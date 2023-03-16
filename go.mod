@@ -1,4 +1,4 @@
-module github.com/ConsiderItDone/polygasm
+module github.com/ConsiderItDone/cosmowrap
 
 go 1.19
 

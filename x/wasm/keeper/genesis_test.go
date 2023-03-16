@@ -25,8 +25,8 @@ import (
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
-	"github.com/ConsiderItDone/polygasm/x/wasm/types"
-	wasmTypes "github.com/ConsiderItDone/polygasm/x/wasm/types"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
+	wasmTypes "github.com/ConsiderItDone/cosmowrap/x/wasm/types"
 )
 
 const firstCodeID = 1

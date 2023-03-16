@@ -17,8 +17,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ConsiderItDone/polygasm/x/wasm/keeper/wasmtesting"
-	"github.com/ConsiderItDone/polygasm/x/wasm/types"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper/wasmtesting"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
 )
 
 func TestMessageHandlerChainDispatch(t *testing.T) {

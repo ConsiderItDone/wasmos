@@ -23,11 +23,11 @@ import (
 	"github.com/spf13/cobra"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/ConsiderItDone/polygasm/x/wasm/client/cli"
-	"github.com/ConsiderItDone/polygasm/x/wasm/client/rest" //nolint:staticcheck
-	"github.com/ConsiderItDone/polygasm/x/wasm/keeper"
-	"github.com/ConsiderItDone/polygasm/x/wasm/simulation"
-	"github.com/ConsiderItDone/polygasm/x/wasm/types"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/client/cli"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/client/rest" //nolint:staticcheck
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/simulation"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
 )
 
 var (

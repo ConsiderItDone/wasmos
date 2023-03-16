@@ -69,9 +69,9 @@ import (
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
-	wasmappparams "github.com/ConsiderItDone/polygasm/app/params"
-	"github.com/ConsiderItDone/polygasm/x/wasm/keeper/wasmtesting"
-	"github.com/ConsiderItDone/polygasm/x/wasm/types"
+	wasmappparams "github.com/ConsiderItDone/cosmowrap/app/params"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper/wasmtesting"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
 )
 
 var moduleBasics = module.NewBasicManager(
