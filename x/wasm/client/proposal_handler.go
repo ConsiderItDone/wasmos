@@ -3,8 +3,8 @@ package client
 import (
 	govclient "github.com/cosmos/cosmos-sdk/x/gov/client"
 
-	"github.com/ConsiderItDone/polygasm/x/wasm/client/cli"
-	"github.com/ConsiderItDone/polygasm/x/wasm/client/rest" //nolint:staticcheck
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/client/cli"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/client/rest" //nolint:staticcheck
 )
 
 // ProposalHandlers define the wasm cli proposal types and rest handler.

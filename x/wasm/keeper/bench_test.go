@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 	dbm "github.com/tendermint/tm-db"
 
-	"github.com/ConsiderItDone/polygasm/x/wasm/types"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
 )
 
 // BenchmarkVerification benchmarks secp256k1 verification which is 1000 gas based on cpu time.

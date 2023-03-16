@@ -3,7 +3,7 @@ package keeper
 import (
 	"bytes"
 	"fmt"
-	"github.com/ConsiderItDone/polygasm/x/wasm/types"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/address"
@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-func TestPolygasmInit(t *testing.T) {
+func TestCosmowrapInit(t *testing.T) {
 	ctx, keepers := CreateTestInput(t, false, AvailableCapabilities)
 
 	deposit := sdk.NewCoins(sdk.NewInt64Coin("denom", 100000))
@@ -33,7 +33,7 @@ func TestPolygasmInit(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, "cosmos14hj2tavq8fpesdwxxcu44rty3hh90vhujrvcmstl4zr3txmfvw9s4hmalr", gotContractAddr.String())
 
-	require.Equal(t, fmt.Sprintf("Hello %s. Polygasm Initialized!", initValue), string(resp))
+	require.Equal(t, fmt.Sprintf("Hello %s. CosmoWrap Initialized!", initValue), string(resp))
 	t.Logf("Initialize response: %s", string(resp))
 
 	gasAfter := ctx.GasMeter().GasConsumed()
@@ -73,7 +73,7 @@ func TestPolygasmInit(t *testing.T) {
 	assert.Equal(t, expEvt, em.Events())
 }
 
-func TestPolygasmUpdateName(t *testing.T) {
+func TestCosmowrapUpdateName(t *testing.T) {
 	ctx, keepers := CreateTestInput(t, false, AvailableCapabilities)
 	accKeeper, keeper, bankKeeper := keepers.AccountKeeper, keepers.ContractKeeper, keepers.BankKeeper
 
@@ -130,7 +130,7 @@ func TestPolygasmUpdateName(t *testing.T) {
 	t.Logf("Name value from Smart Contract: %s", configValue)
 }
 
-func TestPolygasmSayHello(t *testing.T) {
+func TestCosmowrapSayHello(t *testing.T) {
 	ctx, keepers := CreateTestInput(t, false, AvailableCapabilities)
 	accKeeper, keeper, bankKeeper := keepers.AccountKeeper, keepers.ContractKeeper, keepers.BankKeeper
 
@@ -189,6 +189,6 @@ func TestPolygasmSayHello(t *testing.T) {
 	method = "sayHello"
 	res, err := keepers.ContractKeeper.Execute(ctx.WithEventManager(em), addr, fred, nil, method, nil)
 	require.NoError(t, err)
-	assert.Equal(t, "Hello from Polygasm, Joe", string(res))
+	assert.Equal(t, "Hello from CosmoWrap, Joe", string(res))
 	t.Logf("Response: %s", res)
 }

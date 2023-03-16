@@ -10,8 +10,8 @@ import (
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/ConsiderItDone/polygasm/app"
-	"github.com/ConsiderItDone/polygasm/x/wasm"
+	"github.com/ConsiderItDone/cosmowrap/app"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm"
 )
 
 func TestModuleMigrations(t *testing.T) {

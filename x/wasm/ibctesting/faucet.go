@@ -6,7 +6,7 @@ import (
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ConsiderItDone/polygasm/app"
+	"github.com/ConsiderItDone/cosmowrap/app"
 )
 
 // Fund an address with the given amount in default denom

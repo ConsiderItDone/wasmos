@@ -30,8 +30,8 @@ import (
 	"github.com/tendermint/tendermint/libs/rand"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/ConsiderItDone/polygasm/x/wasm/keeper/wasmtesting"
-	"github.com/ConsiderItDone/polygasm/x/wasm/types"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper/wasmtesting"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
 )
 
 //go:embed testdata/hackatom.wasm
@@ -409,7 +409,7 @@ func TestInstantiate(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, "cosmos14hj2tavq8fpesdwxxcu44rty3hh90vhujrvcmstl4zr3txmfvw9s4hmalr", gotContractAddr.String())
 
-	require.Equal(t, fmt.Sprintf("Hello %s. Polygasm Initialized!", initValue), string(resp))
+	require.Equal(t, fmt.Sprintf("Hello %s. CosmoWrap Initialized!", initValue), string(resp))
 	t.Logf("Initialize response: %s", string(resp))
 
 	gasAfter := ctx.GasMeter().GasConsumed()
@@ -736,7 +736,7 @@ func TestInstantiateWithContractFactoryChildQueriesParent(t *testing.T) {
 	// 	     and the child contracts queries the senders ContractInfo on instantiation
 	//	then the factory contract's ContractInfo should be returned to the child contract
 	//
-	// see also: https://github.com/ConsiderItDone/polygasm/issues/896
+	// see also: https://github.com/ConsiderItDone/cosmowrap/issues/896
 	ctx, keepers := CreateTestInput(t, false, AvailableCapabilities)
 	keeper := keepers.WasmKeeper
 

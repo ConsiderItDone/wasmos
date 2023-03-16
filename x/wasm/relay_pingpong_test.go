@@ -17,10 +17,10 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	wasmibctesting "github.com/ConsiderItDone/polygasm/x/wasm/ibctesting"
-	wasmkeeper "github.com/ConsiderItDone/polygasm/x/wasm/keeper"
-	"github.com/ConsiderItDone/polygasm/x/wasm/keeper/wasmtesting"
-	wasmtypes "github.com/ConsiderItDone/polygasm/x/wasm/types"
+	wasmibctesting "github.com/ConsiderItDone/cosmowrap/x/wasm/ibctesting"
+	wasmkeeper "github.com/ConsiderItDone/cosmowrap/x/wasm/keeper"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper/wasmtesting"
+	wasmtypes "github.com/ConsiderItDone/cosmowrap/x/wasm/types"
 )
 
 const (

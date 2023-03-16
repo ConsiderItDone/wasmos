@@ -14,10 +14,10 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
 
-	"github.com/ConsiderItDone/polygasm/app/params"
-	wasmkeeper "github.com/ConsiderItDone/polygasm/x/wasm/keeper"
-	"github.com/ConsiderItDone/polygasm/x/wasm/keeper/testdata"
-	"github.com/ConsiderItDone/polygasm/x/wasm/types"
+	"github.com/ConsiderItDone/cosmowrap/app/params"
+	wasmkeeper "github.com/ConsiderItDone/cosmowrap/x/wasm/keeper"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper/testdata"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
 )
 
 // Simulation operation weights constants

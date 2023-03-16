@@ -20,9 +20,9 @@ import (
 	"github.com/tendermint/tendermint/crypto"
 	"github.com/tendermint/tendermint/crypto/ed25519"
 
-	"github.com/ConsiderItDone/polygasm/x/wasm/keeper"
-	"github.com/ConsiderItDone/polygasm/x/wasm/keeper/testdata"
-	"github.com/ConsiderItDone/polygasm/x/wasm/types"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper/testdata"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
 )
 
 type testData struct {

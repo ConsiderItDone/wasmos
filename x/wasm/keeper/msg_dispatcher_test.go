@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/ConsiderItDone/polygasm/x/wasm/keeper/wasmtesting"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper/wasmtesting"
 )
 
 func TestDispatchSubmessages(t *testing.T) {

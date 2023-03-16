@@ -12,7 +12,7 @@ SIMAPP = ./app
 DOCKER := $(shell which docker)
 BUF_IMAGE=bufbuild/buf@sha256:3cb1f8a4b48bd5ad8f09168f10f607ddc318af202f5c057d52a45216793d85e5 #v1.4.0
 DOCKER_BUF := $(DOCKER) run --rm -v $(CURDIR):/workspace --workdir /workspace $(BUF_IMAGE)
-HTTPS_GIT := https://github.com/ConsiderItDone/polygasm.git
+HTTPS_GIT := https://github.com/ConsiderItDone/cosmowrap.git
 
 export GO111MODULE = on
 
@@ -56,10 +56,10 @@ build_tags_comma_sep := $(subst $(empty),$(comma),$(build_tags))
 # process linker flags
 
 ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=wasm \
-		  -X github.com/cosmos/cosmos-sdk/version.AppName=polygasm \
+		  -X github.com/cosmos/cosmos-sdk/version.AppName=cosmowrap \
 		  -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
 		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
-		  -X github.com/ConsiderItDone/polygasm/app.Bech32Prefix=wasm \
+		  -X github.com/ConsiderItDone/cosmowrap/app.Bech32Prefix=wasm \
 		  -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)"
 
 ifeq ($(WITH_CLEVELDB),yes)
@@ -82,7 +82,7 @@ build: go.sum
 ifeq ($(OS),Windows_NT)
 	exit 1
 else
-	go build -mod=readonly $(BUILD_FLAGS) -o build/polygasmd ./cmd/polygasmd
+	go build -mod=readonly $(BUILD_FLAGS) -o build/cosmowrap ./cmd/cosmowrap
 endif
 
 build-contract-tests-hooks:
@@ -160,7 +160,7 @@ lint: format-tools
 format: format-tools
 	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" -not -path "./client/lcd/statik/statik.go" | xargs gofumpt -w -s
 	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" -not -path "./client/lcd/statik/statik.go" | xargs misspell -w
-	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" -not -path "./client/lcd/statik/statik.go" | xargs goimports -w -local github.com/ConsiderItDone/polygasm
+	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" -not -path "./client/lcd/statik/statik.go" | xargs goimports -w -local github.com/ConsiderItDone/cosmowrap
 
 
 ###############################################################################

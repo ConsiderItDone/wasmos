@@ -12,8 +12,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ConsiderItDone/polygasm/x/wasm/keeper/testdata"
-	"github.com/ConsiderItDone/polygasm/x/wasm/types"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper/testdata"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
 )
 
 // test handing of submessages, very closely related to the reflect_test

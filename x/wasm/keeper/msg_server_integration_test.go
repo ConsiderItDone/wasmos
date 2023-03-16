@@ -11,8 +11,8 @@ import (
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/ConsiderItDone/polygasm/app"
-	"github.com/ConsiderItDone/polygasm/x/wasm/types"
+	"github.com/ConsiderItDone/cosmowrap/app"
+	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
 )
 
 //go:embed testdata/reflect.wasm
