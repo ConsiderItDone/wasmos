@@ -127,6 +127,8 @@ message MsgExecuteContract {
     (gogoproto.nullable) = false,
     (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
   ];
+  // Smart contract method to execute
+  string method = 6;
 }
 
 // MsgExecuteContractResponse returns execution result data.

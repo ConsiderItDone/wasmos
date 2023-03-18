@@ -148,6 +148,8 @@ message ExecuteContractProposal {
     (gogoproto.nullable) = false,
     (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
   ];
+  // Smart contract method to execute
+  string method = 7;
 }
 
 // UpdateAdminProposal gov proposal content type to set an admin for a contract.

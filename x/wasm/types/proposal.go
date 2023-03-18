@@ -666,10 +666,11 @@ func NewExecuteContractProposal(
 	description string,
 	runAs string,
 	contract string,
+	method string,
 	msg RawContractMessage,
 	funds sdk.Coins,
 ) *ExecuteContractProposal {
-	return &ExecuteContractProposal{title, description, runAs, contract, msg, funds}
+	return &ExecuteContractProposal{title, description, runAs, contract, msg, funds, method}
 }
 
 // ProposalRoute returns the routing key of a parameter change proposal.

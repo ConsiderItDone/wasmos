@@ -204,6 +204,7 @@ func SimulateExecuteContractProposal(
 			simtypes.RandStringOfLength(r, 10),
 			simAccount.Address.String(),
 			ctAddress.String(),
+			"",
 			msg.Msg,
 			sdk.Coins{},
 		)
