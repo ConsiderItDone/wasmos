@@ -25,7 +25,7 @@
 See [Hello World](https://github.com/ConsiderItDone/cosmowrap-hello-world-as/) smart contract example.
 
 
-Take a look at test file [`x/wasm/keeper/cosmowrap_test.go`](x/wasm/keeper/cosmowrap_test.go.go)
+Take a look at test file [`x/wasm/keeper/cosmowrap_test.go`](x/wasm/keeper/cosmowrap_test.go)
 
 
 ```shell
