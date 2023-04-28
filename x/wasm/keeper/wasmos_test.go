@@ -3,7 +3,7 @@ package keeper
 import (
 	"bytes"
 	"fmt"
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
+	"github.com/ConsiderItDone/wasmos/x/wasm/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/address"
@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-func TestCosmowrapInit(t *testing.T) {
+func TestWasmosInit(t *testing.T) {
 	ctx, keepers := CreateTestInput(t, false, AvailableCapabilities)
 
 	deposit := sdk.NewCoins(sdk.NewInt64Coin("denom", 100000))
@@ -73,7 +73,7 @@ func TestCosmowrapInit(t *testing.T) {
 	assert.Equal(t, expEvt, em.Events())
 }
 
-func TestCosmowrapUpdateName(t *testing.T) {
+func TestWasmosUpdateName(t *testing.T) {
 	ctx, keepers := CreateTestInput(t, false, AvailableCapabilities)
 	accKeeper, keeper, bankKeeper := keepers.AccountKeeper, keepers.ContractKeeper, keepers.BankKeeper
 
@@ -130,7 +130,7 @@ func TestCosmowrapUpdateName(t *testing.T) {
 	t.Logf("Name value from Smart Contract: %s", configValue)
 }
 
-func TestCosmowrapSayHello(t *testing.T) {
+func TestWasmosSayHello(t *testing.T) {
 	ctx, keepers := CreateTestInput(t, false, AvailableCapabilities)
 	accKeeper, keeper, bankKeeper := keepers.AccountKeeper, keepers.ContractKeeper, keepers.BankKeeper
 

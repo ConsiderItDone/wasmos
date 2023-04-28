@@ -21,9 +21,9 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 
-	"github.com/ConsiderItDone/cosmowrap/app"
-	"github.com/ConsiderItDone/cosmowrap/x/wasm"
-	wasmtypes "github.com/ConsiderItDone/cosmowrap/x/wasm/types"
+	"github.com/ConsiderItDone/wasmos/app"
+	"github.com/ConsiderItDone/wasmos/x/wasm"
+	wasmtypes "github.com/ConsiderItDone/wasmos/x/wasm/types"
 )
 
 func setup(db dbm.DB, withGenesis bool, invCheckPeriod uint, opts ...wasm.Option) (*app.WasmApp, app.GenesisState) {

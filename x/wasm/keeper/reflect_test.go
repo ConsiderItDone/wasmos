@@ -18,8 +18,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper/testdata"
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
+	"github.com/ConsiderItDone/wasmos/x/wasm/keeper/testdata"
+	"github.com/ConsiderItDone/wasmos/x/wasm/types"
 )
 
 // ReflectInitMsg is {}

@@ -12,8 +12,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper/wasmtesting"
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
+	"github.com/ConsiderItDone/wasmos/x/wasm/keeper/wasmtesting"
+	"github.com/ConsiderItDone/wasmos/x/wasm/types"
 )
 
 func TestOnOpenChannel(t *testing.T) {

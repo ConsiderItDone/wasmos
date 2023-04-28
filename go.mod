@@ -1,4 +1,4 @@
-module github.com/ConsiderItDone/cosmowrap
+module github.com/ConsiderItDone/wasmos
 
 go 1.19
 

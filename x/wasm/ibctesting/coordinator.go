@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/require"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	wasmkeeper "github.com/ConsiderItDone/cosmowrap/x/wasm/keeper"
+	wasmkeeper "github.com/ConsiderItDone/wasmos/x/wasm/keeper"
 )
 
 const ChainIDPrefix = "testchain"
