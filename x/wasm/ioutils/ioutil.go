@@ -5,7 +5,7 @@ import (
 	"compress/gzip"
 	"io"
 
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
+	"github.com/ConsiderItDone/wasmos/x/wasm/types"
 )
 
 // Uncompress expects a valid gzip source to unpack or fails. See IsGzip

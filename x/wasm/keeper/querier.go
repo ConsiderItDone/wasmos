@@ -14,7 +14,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/cosmos/cosmos-sdk/types/query"
 
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
+	"github.com/ConsiderItDone/wasmos/x/wasm/types"
 )
 
 var _ types.QueryServer = &grpcQuerier{}

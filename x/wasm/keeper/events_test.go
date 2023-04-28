@@ -8,7 +8,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
+	"github.com/ConsiderItDone/wasmos/x/wasm/types"
 )
 
 func TestHasWasmModuleEvent(t *testing.T) {

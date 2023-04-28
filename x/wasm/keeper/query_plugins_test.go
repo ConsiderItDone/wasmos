@@ -25,10 +25,10 @@ import (
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
-	"github.com/ConsiderItDone/cosmowrap/app"
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper"
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper/wasmtesting"
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
+	"github.com/ConsiderItDone/wasmos/app"
+	"github.com/ConsiderItDone/wasmos/x/wasm/keeper"
+	"github.com/ConsiderItDone/wasmos/x/wasm/keeper/wasmtesting"
+	"github.com/ConsiderItDone/wasmos/x/wasm/types"
 )
 
 func TestIBCQuerier(t *testing.T) {

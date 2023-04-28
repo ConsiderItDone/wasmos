@@ -17,8 +17,8 @@ import (
 	"github.com/spf13/cobra"
 	flag "github.com/spf13/pflag"
 
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper"
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
+	"github.com/ConsiderItDone/wasmos/x/wasm/keeper"
+	"github.com/ConsiderItDone/wasmos/x/wasm/types"
 )
 
 func GetQueryCmd() *cobra.Command {

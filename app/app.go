@@ -111,10 +111,10 @@ import (
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
-	wasmappparams "github.com/ConsiderItDone/cosmowrap/app/params"
-	"github.com/ConsiderItDone/cosmowrap/x/wasm"
-	wasmclient "github.com/ConsiderItDone/cosmowrap/x/wasm/client"
-	wasmkeeper "github.com/ConsiderItDone/cosmowrap/x/wasm/keeper"
+	wasmappparams "github.com/ConsiderItDone/wasmos/app/params"
+	"github.com/ConsiderItDone/wasmos/x/wasm"
+	wasmclient "github.com/ConsiderItDone/wasmos/x/wasm/client"
+	wasmkeeper "github.com/ConsiderItDone/wasmos/x/wasm/keeper"
 
 	// unnamed import of statik for swagger UI support
 	_ "github.com/cosmos/cosmos-sdk/client/docs/statik"
@@ -132,7 +132,7 @@ var (
 	ProposalsEnabled = "false"
 	// If set to non-empty string it must be comma-separated list of values that are all a subset
 	// of "EnableAllProposals" (takes precedence over ProposalsEnabled)
-	// https://github.com/ConsiderItDone/cosmowrap/blob/02a54d33ff2c064f3539ae12d75d027d9c665f05/x/wasm/internal/types/proposal.go#L28-L34
+	// https://github.com/ConsiderItDone/wasmos/blob/02a54d33ff2c064f3539ae12d75d027d9c665f05/x/wasm/internal/types/proposal.go#L28-L34
 	EnableSpecificProposals = ""
 )
 

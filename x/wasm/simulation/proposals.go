@@ -7,9 +7,9 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
 
-	"github.com/ConsiderItDone/cosmowrap/app/params"
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/keeper/testdata"
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
+	"github.com/ConsiderItDone/wasmos/app/params"
+	"github.com/ConsiderItDone/wasmos/x/wasm/keeper/testdata"
+	"github.com/ConsiderItDone/wasmos/x/wasm/types"
 )
 
 const (

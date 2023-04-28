@@ -34,9 +34,9 @@ import (
 	tmtypes "github.com/tendermint/tendermint/types"
 	tmversion "github.com/tendermint/tendermint/version"
 
-	"github.com/ConsiderItDone/cosmowrap/app"
-	"github.com/ConsiderItDone/cosmowrap/app/params"
-	"github.com/ConsiderItDone/cosmowrap/x/wasm"
+	"github.com/ConsiderItDone/wasmos/app"
+	"github.com/ConsiderItDone/wasmos/app/params"
+	"github.com/ConsiderItDone/wasmos/x/wasm"
 )
 
 var MaxAccounts = 10

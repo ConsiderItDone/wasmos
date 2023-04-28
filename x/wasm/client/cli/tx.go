@@ -19,8 +19,8 @@ import (
 	"github.com/spf13/cobra"
 	flag "github.com/spf13/pflag"
 
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/ioutils"
-	"github.com/ConsiderItDone/cosmowrap/x/wasm/types"
+	"github.com/ConsiderItDone/wasmos/x/wasm/ioutils"
+	"github.com/ConsiderItDone/wasmos/x/wasm/types"
 )
 
 const (
