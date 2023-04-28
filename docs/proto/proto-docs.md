@@ -640,6 +640,7 @@ contract.
 | `contract` | [string](#string) |  | Contract is the address of the smart contract |
 | `msg` | [bytes](#bytes) |  | Msg json encoded message to be passed to the contract as execute |
 | `funds` | [cosmos.base.v1beta1.Coin](#cosmos.base.v1beta1.Coin) | repeated | Funds coins that are transferred to the contract on instantiation |
+| `method` | [string](#string) |  | Smart contract method to execute |
 
 
 
@@ -1319,6 +1320,7 @@ MsgExecuteContract submits the given message data to a smart contract
 | `contract` | [string](#string) |  | Contract is the address of the smart contract |
 | `msg` | [bytes](#bytes) |  | Msg json encoded message to be passed to the contract |
 | `funds` | [cosmos.base.v1beta1.Coin](#cosmos.base.v1beta1.Coin) | repeated | Funds coins that are transferred to the contract on execution |
+| `method` | [string](#string) |  | Smart contract method to execute |
 
 
 
