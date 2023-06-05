@@ -3,7 +3,7 @@ module github.com/ConsiderItDone/wasmos
 go 1.19
 
 require (
-	github.com/CosmWasm/wasmvm v1.1.1
+	github.com/CosmWasm/wasmvm v1.2.4
 	github.com/cosmos/cosmos-proto v1.0.0-beta.1
 	github.com/cosmos/cosmos-sdk v0.45.11
 	github.com/cosmos/gogoproto v1.4.3
@@ -144,6 +144,6 @@ replace (
 	// latest grpc doesn't work with with our modified proto compiler, so we need to enforce
 	// the following version across all dependencies.
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
-	google.golang.org/grpc => google.golang.org/grpc v1.33.2
 	github.com/polywrap/go-client => ../polywrap-go-client
+	google.golang.org/grpc => google.golang.org/grpc v1.33.2
 )
